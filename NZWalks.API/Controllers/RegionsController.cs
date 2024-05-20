@@ -19,12 +19,14 @@ namespace NZWalks.API.Controllers
         private readonly NZWalksDbContext _dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper, ILogger<RegionsController> logger)
         {
             this._dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
         [HttpGet]
         [Authorize(Roles = "Reader")]
@@ -32,6 +34,8 @@ namespace NZWalks.API.Controllers
 
         public async Task<IActionResult> GetAll()
         {
+            //logger.LogInformation("hello world.");
+
             // Get Data From Database - Domain models
             var regionsDomain = await regionRepository.GetAllAsync();
 
