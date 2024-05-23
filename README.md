@@ -101,7 +101,43 @@ app.UseStaticFiles(new StaticFileOptions
 );
 
 ## Section 10
+- use Serilog  & use logger in the action methods to log valuable info
+- log the output to Console or .txt file
+- diff. levels: information, warning & error
+- global exception handling: 
+1. create custom ExceptionHandlerMiddleware at 1 place & use its method anywhere you want to log info, e.g. Controller, Repository classes
+2. use try catch blocks & return back a generic http response with status code 500
 
+## Section 11 
+- API versioning: manual doing / use nuget package
+- using nuget package : https://im5tu.io/article/2022/09/asp.net-core-versioning-mvc-apis/
+
+## Section 12
+- use try catch block & httpClient to consume APIs in the MVC application
+- use .EnsureSuccessStatusCode(), once succeed -> extract the reponse body from the http response content like:
+await httpResponseMessage.Content.ReadFromJsonAsync<IEnumerable<RegionDto>>();
+- in the < a > tag, can specify the routing attributes below:
+1. asp-controller = "Regions"
+2. asp-action = "Index"
+3. asp-route-id = "@region.id"
+
+## Section 13
+- deploy ASP.NET web app to Azure
+- naming convention: matter-projectName-regionName-dev-codeNumber, e.g. rg-nzwalks-eastus-dev-001, sqlserver-nzwalks-eastus-dev-001 ...
+1. Go to Azure portal > Add Subscription > Create Resource group
+2. Create App Service 
+3. Create SQL Databases > Add Network info of SQL (enable Public access: add client IPv4 address & check the exception)
+4. Back to VS:
+- config account (File > Account setting)
+- create Profile (Right click the API proj & click Publish)
+- connect Service Dependencies (2 DBs) to Azure SQL Database
+- click the Publish again
+- add the Migrations upon the publish of DBs (click the More Actions under Publish & select Edit)
+5. Back to App Service, go to the Advanced Tools to troubleshoot with the DLL
+- direct to the Kudu  & go to CMD to debug (cd site/wwwroot)
+- type dotnet NZWalks.API.dll to spot the exception
+- publish the Images folder in local dir to Azure as well & restart the app
+6. use Postman to test the API working as expected  with the domain assigned by Azure
 
   
 
